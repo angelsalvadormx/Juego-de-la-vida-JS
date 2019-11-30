@@ -1,5 +1,7 @@
 # Juego-de-la-vida-JS
 
+[Vista previa](https://angelsalvadormx.github.io/juego_de_la_vida/)
+
 ## Configuración
 
 * **Configurar celulas vivas por default**: En el atributo *vivos* del objecto *config* puedes agregar las cordenas de default.
