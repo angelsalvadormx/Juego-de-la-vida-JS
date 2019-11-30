@@ -13,11 +13,9 @@ body{
 }
 #main{
   display: grid;
-  grid-template-columns: repeat(5,20px);
-  grid-template-rows: repeat(5,20px);
+  /*grid-template-columns: repeat(5,20px);
+  grid-template-rows: repeat(5,20px);*/
   grid-gap: 2px;
-  margin: 0 auto;
-  width: 86px;
 }
 #main i{
   background-color: #FFF;

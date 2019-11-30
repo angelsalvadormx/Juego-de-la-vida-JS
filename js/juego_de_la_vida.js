@@ -1,8 +1,8 @@
 // Configuracion inicial
 const conf = {
-  "vivos": ["1,1", "2,1", "3,1"],
-  "width": 5,
-  "height": 5,
+  "vivos": ["2,1", "2,2", "3,2","3,3","4,2"],
+  "width": 50,
+  "height": 50,
   "tablero": document.getElementById('main')
 }
 
@@ -10,7 +10,7 @@ const conf = {
 const start = () => {
   cargarTablero();
   setInterval(() => {
-    buscarSobrevivientes()
+    buscarSobrevivientes();
   }, 2000);
 }
 
@@ -19,10 +19,14 @@ const cargarTablero = () => {
   for (let i = 0; i < conf.width; i++) {
     for (let j = 0; j < conf.height; j++) {
       found = conf.vivos.find(vivo => vivo == i + "," + j);
-      clase = found != undefined ? 'vivo' : ''
+      if(found != undefined){
+        console.log(i + "," + j);
+      }
+      clase = found != undefined ? 'vivo' : '';
       html += "<i id='" + i + "," + j + "' class='" + clase + "'></i>";
     }
   }
+  conf.tablero.style = "grid-template-columns: repeat(" + conf.width + ", 20px);grid-template-rows: repeat(" + conf.height + ", 20px)";
   conf.tablero.innerHTML = html;
 }
 
@@ -32,15 +36,11 @@ const buscarSobrevivientes = () => {
   for (let x = 0; x < conf.width; x++) {
     for (let y = 0; y < conf.height; y++) {
       let vecinos = buscarVecinos(x,y);
-      console.log(vecinos);
       let numVecinosVivos = buscarVecinosVivos(vecinos);
-      console.log("numVecinosVivos ",numVecinosVivos);
       actualizar_estado(numVecinosVivos,x+","+y);
     }
   }
   buscarTodosLosVivos();
-  console.log(conf.vivos);
-  
 }
 
 const buscarVecinos = (x,y) => {
@@ -73,7 +73,6 @@ const buscarVecinosVivos = (vecinos)=>{
 // Actualiza el estado del la celula
 const actualizar_estado =(numVecinosVivos,celula) =>{
   const elemento = document.getElementById(celula);
-  console.log(elemento);
   if(elemento.classList.contains('vivo')){
     if(numVecinosVivos <= 1 || numVecinosVivos > 3){
       elemento.classList.remove('vivo');
@@ -85,8 +84,6 @@ const actualizar_estado =(numVecinosVivos,celula) =>{
 
 const buscarTodosLosVivos=()=>{
   let vivos = document.getElementsByClassName('vivo');
-  console.log("vivos",vivos);
-  
   conf.vivos = [];
   if(Object.keys(vivos).length > 0){
     Object.keys(vivos).forEach((index) =>{
