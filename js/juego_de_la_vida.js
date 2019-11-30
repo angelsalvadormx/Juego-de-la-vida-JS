@@ -12,10 +12,12 @@ const start = ()=>{
 }
 
 const cargarTablero = () => {
-  let html = "";
+  let html = "",clase = "", found = undefined;
   for (let i = 0; i < conf.width; i++) {
     for (let j = 0; j < conf.height; j++) {
-      html += "<i id='"+i+"-"+j+"'></i>";
+      found = conf.vivos.find(vivo=> vivo == i+","+j);
+      clase = found != undefined ? 'vivo':'' 
+      html += "<i id='"+i+","+j+"' class='"+clase+"'></i>";
     }
   }
   conf.tablero.innerHTML = html;
