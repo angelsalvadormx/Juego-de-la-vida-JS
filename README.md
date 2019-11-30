@@ -22,3 +22,41 @@
     start();
   </script>
 ```
+## Ejemplo completo
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Juego de la vida</title>
+  <!-- Estilo -->
+  <link rel="stylesheet" href="./css/juego_de_la_vida.css">
+</head>
+
+<body>
+  <!-- Tablero -->
+  <main id="main"></main>
+  <script src="./js/juego_de_la_vida.js"></script>
+  <script>
+    // Configuración inicial
+    const config = {
+      "vivos": ["2,1", "2,2", "3,2", "3,3", "4,2"],
+      "width": 50,
+      "height": 50,
+      "tablero": document.getElementById('main'),
+      "tiempo":2000
+    }
+
+    /**
+     * @Ubicación del archivo: js/juego_de_la_vida.js
+     * @linea: 4  
+     */
+    start();
+  </script>
+</body>
+
+</html>
+```
