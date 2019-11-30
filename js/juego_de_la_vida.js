@@ -1,5 +1,6 @@
 /**
- * @description Ejecuta la funcion cargarTablero y dentro de un setInterval la funcion buscarSobrevivientes
+ * @description Ejecuta la función cargarTablero y dentro de un setInterval la función buscarSobrevivientes
+ * 
  */
 const start = () => {
   cargarTablero();
@@ -9,7 +10,7 @@ const start = () => {
 }
 
 /**
- * @description Inserta los elementos li dentro del tablero con su id que es su cordenada  y la clase 'vivo' si la cordenada se encuentra en el array de vivos del objecto config. ademas agrega unos estilos al tablero 
+ * @description Inserta los elementos li dentro del tablero con su id que es su cordenada  y la clase 'vivo' si la cordenada se encuentra en el array de vivos del objeto config. ademas agrega unos estilos al tablero 
  */
 const cargarTablero = () => {
   let html = "", clase = "", found = undefined;
@@ -25,7 +26,7 @@ const cargarTablero = () => {
 }
 
 /**
- * @description Recore todas los elementos que contiene el tablero, ejecuta la funcion de buscarVecinos, buscarVecinosVivos,actualizarEstado,buscarTodosLosVivos
+ * @description Recorre todas los elementos que contiene el tablero, ejecuta la función de buscarVecinos, buscarVecinosVivos,actualizarEstado,buscarTodosLosVivos
  */
 const buscarSobrevivientes = () => {
   console.log('Buscando sobrevivientes....');
@@ -42,7 +43,7 @@ const buscarSobrevivientes = () => {
 }
 
 /**
- * @description Buscar todos los vecinos cerca de la cardenada pasada por los parametros.
+ * @description Buscar todos los vecinos cerca de la cardenada pasada por los parámetros.
  * @param {int} x 
  * @param {int} y 
  * @returns {Array} Regresa un array con los vecinos encontrados
@@ -66,7 +67,7 @@ const buscarVecinos = (x,y) => {
 /**
  * @description Busca todos los vecinos vivos.
  * @param {Array} vecinos 
- * @returns {int} Regresa el numero total de vecinos vivos encontrados.
+ * @returns {int} Regresa el número total de vecinos vivos encontrados.
  */
 const buscarVecinosVivos = (vecinos)=>{
   let contador = 0;
@@ -79,7 +80,7 @@ const buscarVecinosVivos = (vecinos)=>{
 }
  
 /**
- * @description Actualiza el estado del elemento que tenga el id de la celula, agregando o removiendo la clase de vivo
+ * @description Actualiza el estado del elemento que tenga el id de la célula, agregando o removiendo la clase de vivo
  * @param {int} numVecinosVivos 
  * @param {string} idCelula 
  */
@@ -95,7 +96,7 @@ const actualizarEstado =(numVecinosVivos,idCelula) =>{
 }
 
 /**
- * @description Busca todos los elementos que tenga la clase vivo y actualiza el array de vivos en el objecto config
+ * @description Busca todos los elementos que tenga la clase vivo y actualiza el array de vivos en el objeto config
  */
 const buscarTodosLosVivos=()=>{
   let vivos = document.getElementsByClassName('vivo');
