@@ -29,9 +29,12 @@ const cargarTablero = () => {
 // actualizar generacion
 const buscarSobrevivientes = () => {
   console.log('Buscando sobrevivientes');
-  let vecinos = buscarVecinos(1,2);
+  let vecinos = buscarVecinos(2,2);
   console.log(vecinos);
+  let numVecinosVivos = buscarVecinosVivos(vecinos);
+  console.log("numVecinosVivos ",numVecinosVivos);
   
+  actualiza_estado(numVecinosVivos,"2,2");
 }
 
 const buscarVecinos = (x,y) => {
@@ -48,6 +51,30 @@ const buscarVecinos = (x,y) => {
     x--;
   }
   return vecinos.filter(vecino => vecino != posicion );  
+}
+
+// Busca busca cuantos vecinos vivos tiene
+const buscarVecinosVivos = (vecinos)=>{
+  let contador = 0;
+  vecinos.forEach(vecino => {
+    if(conf.vivos.find(vivo=> vivo == vecino) != undefined){
+      contador++;
+    }
+  });
+  return contador;
+}
+
+// Actualiza el estado del la celula
+const actualiza_estado =(numVecinosVivos,celula) =>{
+  const elemento = document.getElementById(celula);
+  console.log(elemento);
+  if(elemento.classList.contains('vivo')){
+    if(numVecinosVivos == 0 || numVecinosVivos > 3){
+      elemento.classList.remove('vivo');
+    }
+  }else if(numVecinosVivos == 3){
+    elemento.classList.add('vivo')
+  }
 }
 
 
