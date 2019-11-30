@@ -9,9 +9,9 @@ const conf = {
 // iniciar el juego
 const start = () => {
   cargarTablero();
-  buscarSobrevivientes()
-  /*setInterval(() => {
-  }, 2000);*/
+  setInterval(() => {
+    buscarSobrevivientes()
+  }, 2000);
 }
 
 const cargarTablero = () => {
@@ -29,12 +29,18 @@ const cargarTablero = () => {
 // actualizar generacion
 const buscarSobrevivientes = () => {
   console.log('Buscando sobrevivientes');
-  let vecinos = buscarVecinos(2,2);
-  console.log(vecinos);
-  let numVecinosVivos = buscarVecinosVivos(vecinos);
-  console.log("numVecinosVivos ",numVecinosVivos);
+  for (let x = 0; x < conf.width; x++) {
+    for (let y = 0; y < conf.height; y++) {
+      let vecinos = buscarVecinos(x,y);
+      console.log(vecinos);
+      let numVecinosVivos = buscarVecinosVivos(vecinos);
+      console.log("numVecinosVivos ",numVecinosVivos);
+      actualizar_estado(numVecinosVivos,x+","+y);
+    }
+  }
+  buscarTodosLosVivos();
+  console.log(conf.vivos);
   
-  actualiza_estado(numVecinosVivos,"2,2");
 }
 
 const buscarVecinos = (x,y) => {
@@ -65,16 +71,30 @@ const buscarVecinosVivos = (vecinos)=>{
 }
 
 // Actualiza el estado del la celula
-const actualiza_estado =(numVecinosVivos,celula) =>{
+const actualizar_estado =(numVecinosVivos,celula) =>{
   const elemento = document.getElementById(celula);
   console.log(elemento);
   if(elemento.classList.contains('vivo')){
-    if(numVecinosVivos == 0 || numVecinosVivos > 3){
+    if(numVecinosVivos <= 1 || numVecinosVivos > 3){
       elemento.classList.remove('vivo');
     }
   }else if(numVecinosVivos == 3){
     elemento.classList.add('vivo')
   }
+}
+
+const buscarTodosLosVivos=()=>{
+  let vivos = document.getElementsByClassName('vivo');
+  console.log("vivos",vivos);
+  
+  conf.vivos = [];
+  if(Object.keys(vivos).length > 0){
+    Object.keys(vivos).forEach((index) =>{
+      conf.vivos.push(vivos[index].getAttribute('id'));
+      
+    });
+  }
+  
 }
 
 
