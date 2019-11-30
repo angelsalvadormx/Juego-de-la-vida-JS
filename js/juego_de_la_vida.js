@@ -1,48 +1,52 @@
-// Configuracion inicial
-const conf = {
-  "vivos": ["2,1", "2,2", "3,2","3,3","4,2"],
-  "width": 50,
-  "height": 50,
-  "tablero": document.getElementById('main')
-}
-
-// iniciar el juego
+/**
+ * @description Ejecuta la funcion cargarTablero y dentro de un setInterval la funcion buscarSobrevivientes
+ */
 const start = () => {
   cargarTablero();
   setInterval(() => {
     buscarSobrevivientes();
-  }, 2000);
+  }, config.tiempo);
 }
 
+/**
+ * @description Inserta los elementos li dentro del tablero con su id que es su cordenada  y la clase 'vivo' si la cordenada se encuentra en el array de vivos del objecto config. ademas agrega unos estilos al tablero 
+ */
 const cargarTablero = () => {
   let html = "", clase = "", found = undefined;
-  for (let i = 0; i < conf.width; i++) {
-    for (let j = 0; j < conf.height; j++) {
-      found = conf.vivos.find(vivo => vivo == i + "," + j);
-      if(found != undefined){
-        console.log(i + "," + j);
-      }
+  for (let i = 0; i < config.width; i++) {
+    for (let j = 0; j < config.height; j++) {
+      found = config.vivos.find(vivo => vivo == i + "," + j);
       clase = found != undefined ? 'vivo' : '';
       html += "<i id='" + i + "," + j + "' class='" + clase + "'></i>";
     }
   }
-  conf.tablero.style = "grid-template-columns: repeat(" + conf.width + ", 20px);grid-template-rows: repeat(" + conf.height + ", 20px)";
-  conf.tablero.innerHTML = html;
+  config.tablero.style = "grid-template-columns: repeat(" + config.width + ", 20px);grid-template-rows: repeat(" + config.height + ", 20px)";
+  config.tablero.innerHTML = html;
 }
 
-// actualizar generacion
+/**
+ * @description Recore todas los elementos que contiene el tablero, ejecuta la funcion de buscarVecinos, buscarVecinosVivos,actualizarEstado,buscarTodosLosVivos
+ */
 const buscarSobrevivientes = () => {
-  console.log('Buscando sobrevivientes');
-  for (let x = 0; x < conf.width; x++) {
-    for (let y = 0; y < conf.height; y++) {
-      let vecinos = buscarVecinos(x,y);
-      let numVecinosVivos = buscarVecinosVivos(vecinos);
-      actualizar_estado(numVecinosVivos,x+","+y);
+  console.log('Buscando sobrevivientes....');
+  let vecinos = [];
+  let numVecinosVivos = 0;
+  for (let x = 0; x < config.width; x++) {
+    for (let y = 0; y < config.height; y++) {
+      vecinos = buscarVecinos(x,y);
+      numVecinosVivos = buscarVecinosVivos(vecinos);
+      actualizarEstado(numVecinosVivos,x+","+y);
     }
   }
   buscarTodosLosVivos();
 }
 
+/**
+ * @description Buscar todos los vecinos cerca de la cardenada pasada por los parametros.
+ * @param {int} x 
+ * @param {int} y 
+ * @returns {Array} Regresa un array con los vecinos encontrados
+ */
 const buscarVecinos = (x,y) => {
   let vecinos = [];
   let posicion = x+','+y;
@@ -59,20 +63,28 @@ const buscarVecinos = (x,y) => {
   return vecinos.filter(vecino => vecino != posicion );  
 }
 
-// Busca busca cuantos vecinos vivos tiene
+/**
+ * @description Busca todos los vecinos vivos.
+ * @param {Array} vecinos 
+ * @returns {int} Regresa el numero total de vecinos vivos encontrados.
+ */
 const buscarVecinosVivos = (vecinos)=>{
   let contador = 0;
   vecinos.forEach(vecino => {
-    if(conf.vivos.find(vivo=> vivo == vecino) != undefined){
+    if(config.vivos.find(vivo=> vivo == vecino) != undefined){
       contador++;
     }
   });
   return contador;
 }
-
-// Actualiza el estado del la celula
-const actualizar_estado =(numVecinosVivos,celula) =>{
-  const elemento = document.getElementById(celula);
+ 
+/**
+ * @description Actualiza el estado del elemento que tenga el id de la celula, agregando o removiendo la clase de vivo
+ * @param {int} numVecinosVivos 
+ * @param {string} idCelula 
+ */
+const actualizarEstado =(numVecinosVivos,idCelula) =>{
+  const elemento = document.getElementById(idCelula);
   if(elemento.classList.contains('vivo')){
     if(numVecinosVivos <= 1 || numVecinosVivos > 3){
       elemento.classList.remove('vivo');
@@ -82,16 +94,17 @@ const actualizar_estado =(numVecinosVivos,celula) =>{
   }
 }
 
+/**
+ * @description Busca todos los elementos que tenga la clase vivo y actualiza el array de vivos en el objecto config
+ */
 const buscarTodosLosVivos=()=>{
   let vivos = document.getElementsByClassName('vivo');
-  conf.vivos = [];
+  config.vivos = [];
   if(Object.keys(vivos).length > 0){
     Object.keys(vivos).forEach((index) =>{
-      conf.vivos.push(vivos[index].getAttribute('id'));
-      
+      config.vivos.push(vivos[index].getAttribute('id'));   
     });
   }
-  
 }
 
 
