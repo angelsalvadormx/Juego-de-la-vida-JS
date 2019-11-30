@@ -1,4 +1,6 @@
 # Juego-de-la-vida-JS
+[¿Qué es el juego de la vida?](http://universo.math.org.mx/2014-1/Explicado-el-juego-de-la-vida/explicado-el-juego-de-la-vida.html)
+
 
 [Vista previa](https://angelsalvadormx.github.io/juego_de_la_vida/)
 
